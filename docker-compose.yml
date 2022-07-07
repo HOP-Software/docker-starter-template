@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+
+  wordpress:
+    image: wordpress
+    restart: always
+    container_name: CLIENT NAME # Change
+    ports:
+      - 2002:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: admin
+      WORDPRESS_DB_PASSWORD: password
+      WORDPRESS_DB_NAME: CLIENT NAME # Change
+    volumes:
+      - ./wordpress:/var/www/html
+  # hostname: localhost.test # Change
+  # Database
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: CLIENT NAME # Change
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - ./db:/var/lib/mysql
+      - ./schema/:/docker-entrypoint-initdb.d #Use with database
+    # phpmyadmin
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - '2022:80'
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password
+volumes:
+  wordpress: null
+  db: null
