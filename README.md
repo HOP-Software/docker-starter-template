@@ -30,9 +30,9 @@ docker-compose up
 This creates two new folders next to your `docker-compose.yml` file.
 
 * `db` – used to store and restore database dumps
-* `wp-app` – the location of your WordPress application
+* `wordpress` – the location of your WordPress application
 
-The containers are now built and running. You should be able to access the WordPress installation with the configured IP in the browser address. By default it is `http://127.0.0.1`.
+The containers are now built and running. You should be able to access the WordPress installation with the configured IP in the browser address. By default it is `http://127.0.0.1/8001`.
 
 ## Usage
 
@@ -67,7 +67,7 @@ docker-compose down -v
 Copy the `docker-compose.yml` file into a new directory. In the directory you create two folders:
 
 * `schema` – here you add the database dump
-* `wp-app` – here you copy your existing WordPress code
+* `wordpress` – here you copy your existing WordPress code
 
 You can now use the `up` command:
 
@@ -78,8 +78,8 @@ docker-compose up
 This will create the containers and populate the database with the given dump. You may set your host entry and change it in the database, or you simply overwrite it in `wp-config.php` by adding:
 
 ```
-define('WP_HOME','http://wp-app.local');
-define('WP_SITEURL','http://wp-app.local');
+define('WP_HOME','http://wordpress.local');
+define('WP_SITEURL','http://wordpress.local');
 ```
 
 ### Creating database dumps
@@ -136,6 +136,6 @@ wp plugin list
 
 ### phpMyAdmin
 
-You can also visit `http://127.0.0.1:8080` to access phpMyAdmin after starting the containers.
+You can also visit `http://127.0.0.1:8081` to access phpMyAdmin after starting the containers.
 
 The default username is `root`, and the password is the same as supplied in the `.env` file.
