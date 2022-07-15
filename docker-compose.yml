@@ -1,11 +1,11 @@
-version: '3'
+version: '3.1'
 
 services:
   wp:
     image: wordpress:latest # https://hub.docker.com/_/wordpress/
-    container_name: ${THEME_NAME} # Change
+    container_name: theme-${THEME_NAME} # Change
     ports:
-      - ${IP}:${WORDPRESS_PORT}:80 # change ip if required
+      - ${WORDPRESS_PORT}:80 # change ip if required
     volumes:
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
       - ./wordpress:/var/www/html # Full wordpress project
@@ -23,6 +23,7 @@ services:
 
   wpcli:
     image: wordpress:cli
+    container_name: wpcli-${THEME_NAME}
     volumes:
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
       - ./wordpress:/var/www/html
@@ -37,20 +38,19 @@ services:
 
   pma:
     image: phpmyadmin/phpmyadmin
+    container_name: pma-${THEME_NAME}
     environment:
       # https://docs.phpmyadmin.net/en/latest/setup.html#docker-environment-variables
       PMA_HOST: db
-      PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
     ports:
-      - ${IP}:${MYSQL_PORT}:80
+      - ${MYSQL_PORT}:80
     links:
       - db:db
 
   db:
     image: mysql:latest # https://hub.docker.com/_/mysql/ - or mariadb https://hub.docker.com/_/mariadb
-    ports:
-      - ${IP}:3306:3306 # change ip if required
+    container_name: db-${THEME_NAME}
     command: [
         '--default_authentication_plugin=mysql_native_password',
         '--character-set-server=utf8mb4',
