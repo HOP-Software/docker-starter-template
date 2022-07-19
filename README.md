@@ -31,6 +31,7 @@ This creates two new folders next to your `docker-compose.yml` file.
 
 * `db` – used to store and restore database dumps
 * `wordpress` – the location of your WordPress application
+* `schema` – use of a database supplied with a theme
 
 The containers are now built and running. You should be able to access the WordPress installation with the configured IP in the browser address. By default it is `http://127.0.0.1/8001`.
 
@@ -133,6 +134,10 @@ This way you can use the CLI command above as follows:
 ```
 wp plugin list
 ```
+
+### Replace database URL by wpcli
+
+wp search-replace oldurl newurl --all-tables
 
 ### phpMyAdmin
 
